@@ -14,6 +14,8 @@ class MainPageLocators:
     ACCOUNT_LINK = (By.XPATH, "//p[text()='Личный Кабинет']")  # Кнопка для перехода в Личный Кабинет
     CONSTRUCTOR_LINK = (By.XPATH, "//p[text()='Конструктор']")  # Кнопка для перехода на страницу Конструктора
     LOGO_LINK = (By.CLASS_NAME, "AppHeader_header__logo__2D0X2")  # Логотип в шапке сайта
+    PLACE_ORDER = (By.XPATH, "//button[text()='Оформить заказ']")  # Кнопка Оформить заказ
+    BURGER_HEADING = (By.XPATH, "//h1[text()='Соберите бургер']")  # Заголовок Соберите Бургер
 
 
 class RegistrationPageLocators:

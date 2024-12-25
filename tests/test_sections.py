@@ -1,31 +1,30 @@
-from selenium import webdriver
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions
 from data import BASE_URL
 from locators import MainPageLocators
 
 
 class TestSections:
-    def test_bun_navigation(self):
-        driver = webdriver.Chrome()
+    def test_bun_navigation(self, driver):
         driver.get(BASE_URL)
-
-        bun = driver.find_element(*MainPageLocators.BUN_1)
-        assert "Флюоресцентная булка R2-D3" in bun.text, "Тест пройден, секция Булки работает"
-        driver.quit()
-
-    def test_sauce_navigation(self):
-        driver = webdriver.Chrome()
-        driver.get(BASE_URL)
-
         driver.find_element(*MainPageLocators.SAUCES_SECTION).click()
-        sauce = driver.find_element(*MainPageLocators.SAUCE_1)
-        assert "Соус Spicy-X" in sauce.text, "Тест пройден, секция Соус работает"
-        driver.quit()
+        WebDriverWait(driver, 5).until(
+            expected_conditions.visibility_of_element_located(MainPageLocators.SAUCE_1))
+        driver.find_element(*MainPageLocators.BUNS_SECTION).click()
+        bun = WebDriverWait(driver, 5).until(
+            expected_conditions.visibility_of_element_located(MainPageLocators.BUN_1))
+        assert "Флюоресцентная булка R2-D3" in bun.text
 
-    def test_filling_navigation(self):
-        driver = webdriver.Chrome()
+    def test_sauce_navigation(self, driver):
         driver.get(BASE_URL)
+        driver.find_element(*MainPageLocators.SAUCES_SECTION).click()
+        sauce = WebDriverWait(driver, 5).until(
+            expected_conditions.visibility_of_element_located(MainPageLocators.SAUCE_1))
+        assert "Соус Spicy-X" in sauce.text
 
+    def test_filling_navigation(self, driver):
+        driver.get(BASE_URL)
         driver.find_element(*MainPageLocators.FILLINGS_SECTION).click()
-        filling = driver.find_element(*MainPageLocators.FILLING_1)
-        assert "Мясо бессмертных моллюсков Protostomia" in filling.text, "Тест пройден, секция Начинки работает"
-        driver.quit()
+        filling = WebDriverWait(driver, 5).until(
+            expected_conditions.visibility_of_element_located(MainPageLocators.FILLING_1))
+        assert "Мясо бессмертных моллюсков Protostomia" in filling.text

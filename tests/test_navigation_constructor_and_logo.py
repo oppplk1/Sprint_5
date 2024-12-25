@@ -1,5 +1,3 @@
-from selenium import webdriver
-from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions
 from data import LOGIN_URL, ACCOUNT_PROFILE_URL
@@ -8,13 +6,12 @@ from helpers import login
 
 
 class TestNavigationConstructor:
-    def test_navigation_constructor(self):
-        driver = webdriver.Chrome()
+    def test_navigation_constructor(self, driver):
         driver.get(LOGIN_URL)
 
         login(driver)
         WebDriverWait(driver, 5).until(
-            expected_conditions.visibility_of_element_located((By.XPATH, "//p[text()='Личный Кабинет']")))
+            expected_conditions.visibility_of_element_located(MainPageLocators.PLACE_ORDER))
 
         driver.find_element(*MainPageLocators.ACCOUNT_LINK).click()
         WebDriverWait(driver, 5).until(
@@ -22,18 +19,15 @@ class TestNavigationConstructor:
 
         driver.find_element(*MainPageLocators.CONSTRUCTOR_LINK).click()
         burger_heading = WebDriverWait(driver, 5).until(
-            expected_conditions.visibility_of_element_located((By.XPATH, "//h1[text()='Соберите бургер']")))
-        assert 'Соберите бургер' in burger_heading.text, "Тест пройден, успешный переход в Конструктор"
+            expected_conditions.visibility_of_element_located(MainPageLocators.BURGER_HEADING))
+        assert 'Соберите бургер' in burger_heading.text
 
-        driver.quit()
-
-    def test_navigation_logo(self):
-        driver = webdriver.Chrome()
+    def test_navigation_logo(self, driver):
         driver.get(LOGIN_URL)
 
         login(driver)
         WebDriverWait(driver, 5).until(
-            expected_conditions.visibility_of_element_located((By.XPATH, "//p[text()='Личный Кабинет']")))
+            expected_conditions.visibility_of_element_located(MainPageLocators.PLACE_ORDER))
 
         driver.find_element(*MainPageLocators.ACCOUNT_LINK).click()
         WebDriverWait(driver, 5).until(
@@ -41,7 +35,5 @@ class TestNavigationConstructor:
 
         driver.find_element(*MainPageLocators.LOGO_LINK).click()
         burger_heading = WebDriverWait(driver, 5).until(
-            expected_conditions.visibility_of_element_located((By.XPATH, "//h1[text()='Соберите бургер']")))
-        assert 'Соберите бургер' in burger_heading.text, "Тест пройден, успешный переход в Конструктор"
-
-        driver.quit()
+            expected_conditions.visibility_of_element_located(MainPageLocators.BURGER_HEADING))
+        assert 'Соберите бургер' in burger_heading.text
